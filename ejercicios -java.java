@@ -1,6 +1,7 @@
-import java.time.LocalTime;
+import java.time.LocalTime; 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Collections;
 
 
 public class Ejercicios {
@@ -110,21 +111,18 @@ public class Ejercicios {
 	//NUEVOS EJERCICIOS
 	// 9. Escribir mostrar en pantalla los primeros 100 numeros primos
 	
-	public static List<Integer> numerosPrimos () {
+	public static List<Integer> numerosPrimos (int limite) {
 		List<Integer> numeros = new ArrayList<>();
-		int contadorPrimos = 0;
-		int contadorDivisible = 0;
-		for (int i=2; i<600; i ++){
-			while (numeros.size()<=100) {
+		for (int i=2; i<600 && numeros.size()<limite; i ++){
+			int contadorDivisible = 0;
+			
 			for (int j=1; j<=i; j++) {
 				if(i%j == 0) {
 					contadorDivisible = contadorDivisible+1;
 				}
 			}
 			if (contadorDivisible == 2) {
-				contadorPrimos = contadorPrimos + 1;
 				numeros.add(i);
-			}
 			}
 		
 		}
@@ -145,16 +143,87 @@ public class Ejercicios {
     }
 	
 	
-
 	
 	// 11. Escribir un método para verificar si un numero positivo de 2 digitos es palindrom	
+	
+	public static boolean numeroPalindromo (int numero) {
+		
+		String cadena = Integer.toString(numero);
+		List<Integer> listaNumeros = new ArrayList<>();
+		
+		for (int i=0; i<cadena.length(); i++) {
+			char caracter = cadena.charAt(i);
+			listaNumeros.add(Integer.parseInt(Character.toString(caracter)));
+		}
+		
+		int mitadLista = listaNumeros.size() / 2;
+		List<Integer> primeraMitad = new ArrayList<>(listaNumeros.subList(0, mitadLista + 1));
+		Collections.reverse(listaNumeros);
+		List<Integer> segundaMitad = new ArrayList<>(listaNumeros.subList(0, mitadLista + 1));
+	    
+		if (primeraMitad.equals(segundaMitad)) {
+		    return true;
+		} else {
+		    return false;
+		}
+		
+	}
+	
+	
 	// 12. Sin usar loops, escribir un metodo para sumar todos los digitos de un numero donde 99 >= n >= 10
+	
+	public static int sumarDigitos (int numero) {
+		
+		if (numero>=10 & numero <=99) {
+			String cadena = Integer.toString(numero);
+			List<Integer> digitosSeparados = new ArrayList<>();
+			char digito = cadena.charAt(0);
+			digitosSeparados.add(Integer.parseInt(Character.toString(digito)));
+			char digito2 = cadena.charAt(1);
+			digitosSeparados.add(Integer.parseInt(Character.toString(digito2)));
+			
+			int sumaTotal = digitosSeparados.get(0) + digitosSeparados.get(1);
+			
+			return sumaTotal;
+			} else {
+				System.out.println("Numero no valido, ingrese uno entre 10 y 99");
+				return 0;
+			}
+	}
+	
+	
 	// 13. Escribir un método para remover espacios en blanco de un String. ej -> "Hola Mundo" -> "HolaMundo"
+	
+	public static String removerEspacios(String cadena) {
+		
+		String[] subCadenas = cadena.split(" ");
+		String cadenaUnida = String.join("", subCadenas);
+		
+		return cadenaUnida;
+	}
+	
 	// 14. Escribir un método para invertir un String. ej -> "Hola" -> "aloH" --- Sin usar loops
 	
+	public static String cadenaReves(String cadena) {
+		StringBuilder cadenaBuilder = new StringBuilder(cadena);
+		cadenaBuilder.reverse();
+		String cadenaReversa = cadenaBuilder.toString();
+		
+		return cadenaReversa;
+	}
+	
 	// 15. Escribir un metodo para encontrar el factorial de un numero sin loops
-
-
+	public static int factorial (int numero) {
+		if (numero == 0 || numero == 1) {
+			return 1;
+		} else {
+			return numero * factorial(numero-1);
+		}
+	}
+		
+		
+	//}
+	
 	
 	
 	
@@ -199,8 +268,36 @@ public class Ejercicios {
 		int anio = 2024;
 		boolean anioResultado = anioBisiesto(anio);
 		System.out.println("Es bisiesto el anio " + anio + "? " + anioResultado);
+		
+		//9
+		List<Integer> primerosPrimos = numerosPrimos(10);
+		System.out.println("Los primeros 100 numero primos son: " + primerosPrimos.toString());
+		
+		//10
+		int suma = sumarSinOperadores (3 , 65);
+		System.out.println("La suma es: " + suma);
+		
+		//11
+		boolean palindromoResultado = numeroPalindromo(4567654);
+		System.out.println("El numero ingresado es un palindromo? " + palindromoResultado);		
         
-        
+		//12
+		int resultadoSumaDigitos = sumarDigitos(97);
+		System.out.println("La suma de los digitos es: " + resultadoSumaDigitos);
+		
+		//13
+		String resultadoCadenaEspacios = removerEspacios("Hola Mundo Feliz");
+		System.out.println("La cadena sin espacios es: " + resultadoCadenaEspacios);
+		
+		
+		//14
+		String cadenaReversa = cadenaReves("anita lava la tina");
+		System.out.println("La cadena al reves es: " + cadenaReversa);
+		
+		
+		//15
+		int resultadoFactorial = factorial(10);
+		System.out.println("El resultado del factorial es: " + resultadoFactorial);
 	}
 
 }
